@@ -1,4 +1,4 @@
-#!name = 视频保存助手（B站/抖音）
+#!name = 视频下载
 #!desc = 配合 iOS 快捷指令，从分享菜单解析公开的 B 站或抖音视频。解析在 Loon 本机完成，不经过第三方解析站。
 #!author = Local build
 #!system = iOS,iPadOS
