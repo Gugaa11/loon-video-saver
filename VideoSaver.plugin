@@ -1,0 +1,26 @@
+#!name = 视频保存助手（B站/抖音）
+#!desc = 配合 iOS 快捷指令，从分享菜单解析公开的 B 站或抖音视频。解析在 Loon 本机完成，不经过第三方解析站。
+#!author = Local build
+#!system = iOS,iPadOS
+#!system_version = 16.0
+#!loon_version = 3.5.1(983)
+#!tag = 工具,视频
+#!type = normal
+
+[Argument]
+bilibili_qn = select,64,32,16,type=number,tag=B站清晰度,desc=64=720P；未登录时平台可能自动降级
+bilibili_cookie = input,"",tag=B站 Cookie（可选）,desc=仅在你有权访问的登录内容需要；数据只由本机脚本发给 B 站
+douyin_cookie = input,"",tag=抖音 Cookie（可选）,desc=匿名解析受风控时可填写；数据只由本机脚本发给抖音
+
+[Rule]
+DOMAIN,video-saver.loon,DIRECT
+
+[Host]
+video-saver.loon = 127.0.0.1
+
+[Script]
+request if ${url} ~= /^http:\/\/video-saver\.loon\/resolve(?:\?|$)/i then script("https://raw.githubusercontent.com/Gugaa11/loon-video-saver/main/src/video-saver.js", {${bilibili_qn}, ${bilibili_cookie}, ${douyin_cookie}}) with tag="解析分享视频", timeout=60
+response if ${url} ~= /^https:\/\/[^/]*(?:amemv\.com|douyin\.com|snssdk\.com)\/aweme\/v\d+\/(?:feed|aweme\/detail|aweme\/post|search\/item)\//i then script("https://raw.githubusercontent.com/Gugaa11/loon-video-saver/main/src/video-saver.js") with tag="缓存抖音视频地址", timeout=15, requires_body=true
+
+[Mitm]
+hostname = *.amemv.com, api.douyin.com, aweme.snssdk.com

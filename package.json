@@ -1,0 +1,11 @@
+{
+  "name": "loon-video-saver",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Loon local resolver for an iOS share-sheet video saving Shortcut",
+  "scripts": {
+    "test": "node test/core.test.js",
+    "smoke:bilibili": "node test/live-smoke.mjs https://www.bilibili.com/video/BV13x41117TL"
+  },
+  "license": "MIT"
+}
